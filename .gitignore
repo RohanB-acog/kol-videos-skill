@@ -1,0 +1,21 @@
+# Build artifacts
+skills/*/baml_client/
+
+# Working directories from individual runs (scratch, not part of the skill)
+skills/*/run/
+skills/*/run_*/
+skills/*/out/
+
+# Local env / credentials
+.env
+*.env
+.envrc
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.uv/
+
+# macOS
+.DS_Store
