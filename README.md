@@ -15,16 +15,31 @@ its contract and procedure are documented in
 ```bash
 git clone git@github.com:RohanB-acog/kol-videos-skill.git
 cd kol-videos-skill
-./install.sh                    # installs for your user (~/.claude/skills)
-# or
-./install.sh /path/to/project   # installs into that project's .claude/skills
+
+# Scope it to one project (recommended) -> <project>/.claude/skills/
+./install.sh /path/to/project
+
+# Or make it available everywhere -> ~/.claude/skills/
+./install.sh
 ```
 
-`install.sh` symlinks the skill into place, so `git pull` here updates every
-install. Pass `--copy` if you'd rather have an independent copy.
+**The two are different places.** With no argument the skill installs at user
+level (`~/.claude/skills/`) and is available in every project — nothing appears
+inside the repo you ran it from. Pass a project path to scope it to that project
+instead. Whichever you pick, Claude Code has to be restarted to notice it.
 
-Then verify Claude Code sees it — start `claude` and the skill should be listed
-as `dbtips-kol-videos`.
+`install.sh` symlinks the skill into place, so `git pull` here updates every
+install. Pass `--copy` before the path if you'd rather have an independent copy.
+
+Verify: start `claude` in the target project and `dbtips-kol-videos` should be
+in the skills list.
+
+To move an install from one scope to the other, delete the old link first:
+
+```bash
+rm ~/.claude/skills/dbtips-kol-videos          # or <project>/.claude/skills/...
+./install.sh /path/to/project
+```
 
 ## Prerequisites
 
