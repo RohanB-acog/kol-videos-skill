@@ -48,10 +48,18 @@ rather than producing an empty result.
 ```bash
 uv tool install --index https://pypi.aganitha.ai/simple 'aganitha-ie-tools[all]==0.36.0'
 uv tool install yt-dlp
-pip install baml-py==0.214.0
+uv tool install baml-py==0.214.0
 ```
 
 `uv` itself: `curl -LsSf https://astral.sh/uv/install.sh | sh`.
+
+**No virtualenv is needed.** `uv tool install` gives each tool its own isolated
+environment and puts the entry point on your PATH, and the scripts in `tools/`
+declare their dependencies inline (PEP 723), so `uv run tools/foo.py` builds a
+throwaway environment per invocation. There is nothing to activate.
+
+Check the install with `uv tool list` — it should show `aganitha-ie-tools`,
+`baml-py`, and `yt-dlp`.
 
 Aganitha's internal PyPI needs auth — run `atk login` first if the
 `aganitha-ie-tools` install 401s.
