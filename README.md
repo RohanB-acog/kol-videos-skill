@@ -16,28 +16,27 @@ its contract and procedure are documented in
 git clone git@github.com:RohanB-acog/kol-videos-skill.git
 cd kol-videos-skill
 
-# Scope it to one project (recommended) -> <project>/.claude/skills/
-./install.sh /path/to/project
-
-# Or make it available everywhere -> ~/.claude/skills/
-./install.sh
+./install.sh                    # this project      -> ./.claude/skills/
+./install.sh /path/to/project   # another project   -> <project>/.claude/skills/
+./install.sh --global           # every project     -> ~/.claude/skills/
 ```
 
-**The two are different places.** With no argument the skill installs at user
-level (`~/.claude/skills/`) and is available in every project — nothing appears
-inside the repo you ran it from. Pass a project path to scope it to that project
-instead. Whichever you pick, Claude Code has to be restarted to notice it.
+**Scope matters and the two locations look nothing alike.** The default is
+project scope: the skill lands in `.claude/skills/` inside the target project.
+`--global` puts it in `~/.claude/skills/` instead, where it is available
+everywhere but nothing appears in the repo.
 
-`install.sh` symlinks the skill into place, so `git pull` here updates every
-install. Pass `--copy` before the path if you'd rather have an independent copy.
+`.claude` is a dotfile directory, so `ls -l` will not list it — use `ls -la`.
+Restart Claude Code after installing; it reads the skills list at startup.
+Verify by starting `claude` in the target project and looking for
+`dbtips-kol-videos` in the skills list.
 
-Verify: start `claude` in the target project and `dbtips-kol-videos` should be
-in the skills list.
-
-To move an install from one scope to the other, delete the old link first:
+Other flags: `--copy` installs an independent copy rather than a symlink (with a
+symlink, `git pull` in this repo updates every install). `--force` replaces an
+existing install at the destination — needed when moving between scopes:
 
 ```bash
-rm ~/.claude/skills/dbtips-kol-videos          # or <project>/.claude/skills/...
+rm ~/.claude/skills/dbtips-kol-videos   # drop a previous --global install
 ./install.sh /path/to/project
 ```
 
